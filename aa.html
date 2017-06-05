@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <!-- <script src="/socket.io/socket.io.js"></script> -->
+  <style media="screen">
+    html, body{
+      margin: 0px;
+      padding: 0px;
+    }
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="800" height="500" id="canvas" >
+  </canvas>
+</body>
+<script type="text/javascript">
+CanvasRenderingContext2D.prototype.strokeCircle = function(x, y, r)
+{
+	this.beginPath();
+	this.arc(x, y, r, 0, 2*Math.PI);
+	this.stroke();
+}
+  // rAF
+  window.requestAnimationFrame = function() {
+  return window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    function(f) {
+      window.setTimeout(f,1e3/60);
+    }
+  }();
+
+  var canvas = document.querySelector('canvas');
+  var ctx = canvas.getContext('2d');
+
+  var W = canvas.width;
+  var H = canvas.height;
+  var radius = 100;
+  var circle = {centerX:100, centerY:1300, radius:1200, angle:0};
+  var ball = {x:0, y:0, spee:0.01, size:84};
+
+  // We want to move/slide/scroll the background
+  // as the player moves or the game progresses
+
+  // Velocity X
+  var vx = 0;
+
+  renderGame();
+  function renderGame() {
+
+
+  ctx.clearRect(0, 0, W, H);
+  ball.x = circle.centerX + Math.cos(circle.angle) * circle.radius;
+  ball.y = circle.centerY + Math.sin(circle.angle) * circle.radius;
+  ctx.strokeCircle(ball.x, ball.y, ball.size);
+  circle.angle+=ball.spee;
+  window.requestAnimationFrame(renderGame);
+}
+</script>
+</html>
