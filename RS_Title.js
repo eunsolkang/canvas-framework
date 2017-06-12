@@ -17,7 +17,7 @@ class TitleState{
 
   }
   onMouseDown(){
-    var playerGameState = new PlayGameState();
-    ChangeGameState( playerGameState );
+    playGameState = new PlayGameState();
+    ChangeGameState( playGameState );
   }
 }

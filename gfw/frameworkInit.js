@@ -10,6 +10,7 @@ function onGameInit()
     resourcePreLoader.AddImage( "file/img/background/background02.png" );
     resourcePreLoader.AddImage( "file/img/object/aa.png" );
     resourcePreLoader.AddImage( "file/img/bird/bird.svg" );
+    resourcePreLoader.AddImage( "file/img/item/balloon.svg" );
 
     // 게임 초기 시작 상태 설정
 

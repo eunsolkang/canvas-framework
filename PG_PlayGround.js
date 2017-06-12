@@ -6,11 +6,14 @@ class PG_PlayGround{
     this.ObjectCode = {
       bird : 1,
     }
+    this.ItemCode = {
+      balloon : 2,
+    }
     this.Init();
   }
   Init(){
     this.arrObjects = new Array();
-    this.AddObject( this.ObjectCode.bird );
+    this.AddItem( this.ItemCode.balloon );
 
   }
   Render(){
@@ -18,10 +21,11 @@ class PG_PlayGround{
     var ctx  = canvas.getContext("2d");
     for(var i=0; i<this.arrObjects.length; i++)
     {
-      this.arrObjects[i].ObjRender( ctx );
+      this.arrObjects[i].Render( ctx );
     }
   }
   Update(){
+    // console.log(offsetX);
     for(var i=0; i<this.arrObjects.length; i++)
     {
       var obj = this.arrObjects[i];
@@ -29,7 +33,10 @@ class PG_PlayGround{
       {
         obj.Update();
         obj.SetPosition( obj.x , obj.y );
-        obj.x -= 5;
+      }
+      if(obj.x < 0)
+      {
+        this.arrObjects.splice(i, 1);
       }
     }
   }
@@ -42,5 +49,26 @@ class PG_PlayGround{
     }
     this.arrObjects.push(obj)
   }
+  AddItem( type ){
+    var obj;
+    if( type == this.ItemCode.balloon )
+    {
+      obj = new ItemBalloon();
+      obj.SetPosition(10, 10);
+    }
+    this.arrObjects.push( obj );
+  }
+  CheckCollision( player )
+  {
+    var obj;
+    for( var i = 0; i < this.arrObjects.length; i++ )
+    {
+      var obj = this.arrObjects[i];
+      if( obj.type == "item" )
+      {
+          obj.CheckCollision( player );
+      }
+    }
 
+  }
 }

@@ -1,21 +1,32 @@
-window.addEventListener("mousedown", onMouseDown, false);
-window.addEventListener("mouseup", onMouseUp, false);
-
 var GMAE_FPS;
 var game_state = new LoadingState();
 var after_loading_state;
 
-function onMouseDown (e)
-{
+$(document).bind('touchstart', (e)=>{
+  var events = e.originalEvent;
+
+  if( game_state.onTouchStart != undefined )
+    game_state.onTouchStart(events);
+});
+$(document).bind('touchmove', (e)=>{
+  var events = e.originalEvent;
+  if( game_state.onTouchMove != undefined ){
+    game_state.onTouchMove(events);
+  }
+});
+$(document).bind('touchend', (e)=>{
+  var events = e.originalEvent;
+  if( game_state.onTouchEnd != undefined )
+    game_state.onTouchEnd(events);
+});
+$(document).bind('mousedown', (e)=>{
   if( game_state.onMouseDown != undefined )
     game_state.onMouseDown(e);
-}
-
-function onMouseUp (e)
-{
+});
+$(document).bind('mouseup', (e)=>{
   if( game_state.onMouseUp != undefined )
     game_state.onMouseUp(e);
-}
+});
 
 function Render(){
   var canvas = document.getElementById("canvas");
